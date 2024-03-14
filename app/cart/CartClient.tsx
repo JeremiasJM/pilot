@@ -7,7 +7,7 @@ import ItemContent from "./ItemContent";
 import { formatPrice } from "@/utils/formatPrice";
 
 const CartClient = () => {
-  const { cartProducts, handleClearCart,cartTotalPrice } = useCart();
+  const { cartProducts, handleClearCart, cartTotalPrice } = useCart();
   if (!cartProducts || cartProducts.length === 0) {
     return (
       <div className="flex flex-col items-center">
@@ -30,11 +30,11 @@ const CartClient = () => {
         {" "}
         Pilot Cart
       </h1>
-      <div className="grid grid-cols-5 text-xs gap-4 pb-2 items-center mt-8">
-        <div className="col-span-2 justify-self-start">Product</div>
-        <div className="justify-self-center">Price</div>
-        <div className="justify-self-center">Quantity</div>
-        <div className="justify-self-end">Total</div>
+      <div className="grid grid-cols-4 text-xs gap-4 pb-2 items-center mt-8">
+        <div className=" justify-self-start ml-5">PRODUCT</div>
+        <div className="justify-self-center">PRICE</div>
+        <div className="justify-self-center">QUATITY</div>
+        <div className="justify-self-center">TOTAL</div>
       </div>
       <div>
         {cartProducts &&
@@ -46,7 +46,9 @@ const CartClient = () => {
         <div className="w-[90px] ">
           <Button
             label="Clear Cart"
-            onClick={() => {handleClearCart()}}
+            onClick={() => {
+              handleClearCart();
+            }}
             small
             outline
           />

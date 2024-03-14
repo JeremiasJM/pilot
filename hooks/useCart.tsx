@@ -16,6 +16,8 @@ type CartContextType = {
   cartProducts: CartProductType[] | null;
   handleAddProductToCart: (product: CartProductType) => void;
   handleRemoveProductFromCart: (product: CartProductType) => void;
+  handleCartQtyIncrease: (product: CartProductType) => void;
+  handleCartQtyDecrease: (product: CartProductType) => void;
   handleClearCart: () => void;
 };
 export const CartContext = createContext<CartContextType | null>(null);
@@ -88,12 +90,59 @@ export const CartContextProvider = (props: Props) => {
     },
     [cartProducts]
   );
+  const handleCartQtyIncrease = useCallback(
+    (product: CartProductType) => {
+      let updatedCart;
+      if (product.quatity === 99) {
+        return toast.error("Max quantity reached");
+      }
+
+      if (cartProducts) {
+        updatedCart = [...cartProducts];
+        const existingIndex = cartProducts.findIndex(
+          (item) => item.id === product.id
+        );
+
+        if (existingIndex > -1) {
+          updatedCart[existingIndex].quatity = ++updatedCart[existingIndex]
+            .quatity;
+        }
+        setCartProducts(updatedCart);
+        localStorage.setItem("PilotCartItems", JSON.stringify(updatedCart));
+      }
+    },
+    [cartProducts]
+  );
+  const handleCartQtyDecrease = useCallback(
+    (product: CartProductType) => {
+      let updatedCart;
+      if (product.quatity === 1) {
+        return toast.error("Min Quatity 1 product");
+      }
+
+      if (cartProducts) {
+        updatedCart = [...cartProducts];
+        const existingIndex = cartProducts.findIndex(
+          (item) => item.id === product.id
+        );
+
+        if (existingIndex > -1) {
+          updatedCart[existingIndex].quatity = --updatedCart[existingIndex]
+            .quatity;
+        }
+        setCartProducts(updatedCart);
+        localStorage.setItem("PilotCartItems", JSON.stringify(updatedCart));
+      }
+    },
+    [cartProducts]
+  );
   const handleClearCart = useCallback(() => {
     setCartProducts([]);
     setCartTotalQty(0);
     localStorage.removeItem("PilotCartItems");
     toast.success("Cart cleared");
   }, [cartProducts]);
+
   const value = {
     cartTotalQty,
     cartProducts,
@@ -101,6 +150,8 @@ export const CartContextProvider = (props: Props) => {
     handleAddProductToCart,
     handleRemoveProductFromCart,
     cartTotalPrice,
+    handleCartQtyIncrease,
+    handleCartQtyDecrease
   };
 
   return <CartContext.Provider value={value} {...props} />;

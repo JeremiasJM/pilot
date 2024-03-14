@@ -1,9 +1,11 @@
 "ue client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Button from "@/app/components/Button";
 import { useCart } from "@/hooks/useCart";
 import { MdCheckCircle } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import SetQuantity from "@/app/components/products/SetQuantity";
+import ProductCard from "@/app/components/products/ProductCard";
 
 interface ProductDetailProps {
   product: any;
@@ -16,6 +18,7 @@ export type CartProductType = {
   category: string;
   image: string;
   stock: number;
+  quatity: number;
 };
 
 const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
@@ -31,6 +34,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
     category: product.category,
     image: product.image,
     stock: product.stock,
+    quatity: 1,
   });
   const router = useRouter();
   console.log(cartProducts);
@@ -48,8 +52,27 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
   const Horizontal = () => {
     return <hr className="w-[30% my-2]" />;
   };
+  const handleQtyIncrease = useCallback(() => {
+    if (cartProduct.quatity === 99) {
+      return;
+    }
+    setCartProduct((prev) => {
+      return { ...prev, quatity: prev.quatity + 1 };
+    });
+  }, [cartProduct]);
+
+  const handleQtyDecrease = useCallback(() => {
+    if (cartProduct.quatity === 1) {
+      return;
+    }
+
+    setCartProduct((prev) => {
+      return { ...prev, quatity: prev.quatity - 1 };
+    });
+  }, [cartProduct]);
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mt-10">
       <div>
         <img
           className="w-full h-[400px] object-contain"
@@ -90,6 +113,13 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
           </>
         ) : (
           <>
+            <Horizontal />
+            <SetQuantity
+              cartProduct={cartProduct}
+              handleQtyDecrease={handleQtyDecrease}
+              handleQtyIncrease={handleQtyIncrease}
+            />
+            <Horizontal />
             <div className="max-w-[300px]">
               <Button
                 label="Add To Cart"
