@@ -11,7 +11,7 @@ import { AiFillInstagram, AiFillTwitterCircle, AiFillYoutube } from 'react-icons
 
 export default function Footer() {
   return (
-    <footer className='bg-slate-700 text-slate-200 text-sm mt-16'>
+    <footer className='bg-slate-800 text-slate-200 text-sm mt-16'>
       <Container>
         <div className='flex flex-col md:flex-row justify-between pt-16 pb-6'>
         <FooterList>
