@@ -12,7 +12,7 @@ import { get } from "http";
 
 type CartContextType = {
   cartTotalQty: number;
-  cartTotalPrice: number;
+  cartTotalAmount: number;
   cartProducts: CartProductType[] | null;
   handleAddProductToCart: (product: CartProductType) => void;
   handleRemoveProductFromCart: (product: CartProductType) => void;
@@ -26,7 +26,7 @@ interface Props {
 }
 export const CartContextProvider = (props: Props) => {
   const [cartTotalQty, setCartTotalQty] = useState(0);
-  const [cartTotalPrice, setCartTotalPrice] = useState(0);
+  const [cartTotalAmount, setCartTotalAmount] = useState(0);
   const [cartProducts, setCartProducts] = useState<CartProductType[]>([]);
 
   useEffect(() => {
@@ -38,23 +38,24 @@ export const CartContextProvider = (props: Props) => {
 
   useEffect(() => {
     const getTotals = () => {
-      if (cartProducts) {
-        const { total } = cartProducts?.reduce(
-          (acc, item) => {
-            const itemTotal = item.price;
-            acc.total += itemTotal;
-            return acc;
-          },
-          {
-            total: 0,
-            qty: 0,
-          }
-        );
-        setCartTotalPrice(total);
+      if (cartProducts) {       
+        const { total, qty } = cartProducts?.reduce((acc, item) => {
+          const itemTotal = item.quatity * item.price;
+
+          acc.total += itemTotal;
+          acc.qty += item.quatity;
+
+          return acc;
+        },{
+          total: 0,
+          qty: 0,
+        });
+        setCartTotalQty(qty)
+        setCartTotalAmount(total)
       }
     };
     getTotals();
-  }, [cartProducts]);
+  },[cartProducts] );
 
   const handleAddProductToCart = useCallback((product: CartProductType) => {
     setCartProducts((prev) => {
@@ -149,9 +150,9 @@ export const CartContextProvider = (props: Props) => {
     handleClearCart,
     handleAddProductToCart,
     handleRemoveProductFromCart,
-    cartTotalPrice,
+    cartTotalAmount,
     handleCartQtyIncrease,
-    handleCartQtyDecrease
+    handleCartQtyDecrease,
   };
 
   return <CartContext.Provider value={value} {...props} />;
