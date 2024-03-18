@@ -26,10 +26,7 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
-    const currentUser = await getCurrentUser();
-    if (!currentUser || currentUser.role === "USER") {
-      return new NextResponse("Unauthorized", { status: 401 });
-    }
+    
     const products = await prisma.product.findMany();
     return NextResponse.json(products);
   } catch (error) {

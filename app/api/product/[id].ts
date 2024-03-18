@@ -5,9 +5,6 @@ import { getCurrentUser } from "@/actions/getCurrentUser";
 export async function GET(request: Request) {
     try {
       const currentUser = await getCurrentUser();
-      if (!currentUser || currentUser.role === "USER") {
-        return new NextResponse("Unauthorized", { status: 401 });
-      }
       
       // Obtener el ID de la consulta de la URL
       const params = new URLSearchParams(request.url.substring(request.url.indexOf("?")));

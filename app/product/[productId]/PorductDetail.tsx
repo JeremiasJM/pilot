@@ -5,7 +5,6 @@ import { useCart } from "@/hooks/useCart";
 import { MdCheckCircle } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import SetQuantity from "@/app/components/products/SetQuantity";
-import ProductCard from "@/app/components/products/ProductCard";
 
 interface ProductDetailProps {
   product: any;
