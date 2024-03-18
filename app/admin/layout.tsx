@@ -1,5 +1,5 @@
 import AdminNav from "../components/admin/AdminNav";
-export const metada={
+export const metadata={
     title:"PILOT-endoscopy",
     description:"Pilot Panel del Administrador"
 }
