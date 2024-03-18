@@ -26,7 +26,19 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
+model Product{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  description String
+  price Float
+  category String
+  images Image
+  inStock Boolean
+}
 
+type Image{
+  image String
+}
 
 model User {
   id            String  @id @default(auto()) @map("_id") @db.ObjectId
