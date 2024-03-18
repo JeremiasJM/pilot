@@ -25,15 +25,15 @@ const ItemContent: React.FC<ItemContentProps> = ({ item }) => {
         <Link href={`/product/${item.id}`}>
           <div className="relative w-[70px] aspect-square ">
             <Image
-              src={item.image}
-              alt={item.title}
+              src={item.images[0].image}
+              alt={item.name}
               fill
               className="object-contain"
             />
           </div>
         </Link>
         <div className="flex flex-col justify-between">
-          <Link href={`/product/${item.id}`}>{truncateText(item.title)}</Link>
+          <Link href={`/product/${item.id}`}>{truncateText(item.name)}</Link>
           <div className="w-[70px]">
             <button
               className=" text-slate-500 underline"

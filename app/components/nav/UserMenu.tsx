@@ -17,6 +17,10 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const toggleOpen = useCallback(() => {
     setIsOpen((prev) => !prev);
   }, []);
+
+  // Verificar si el usuario actual es un administrador
+  const isAdmin = currentUser?.role === "ADMIN";
+
   return (
     <>
       <div className="relative z-30">
@@ -24,20 +28,24 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           onClick={toggleOpen}
           className="p-2 border-[1px] border-slate-400 flex flex-row items-center gap-1 rounded-full cursor-pointer hover:shadow-md transition text-slate-700"
         >
-          <Avatar />
+          <Avatar src={currentUser?.image ?? undefined} />
           <AiFillCaretDown />
         </div>
         {isOpen && (
           <div className="absolute rounded-md shadow-md w-[170px] bg-white overflow-hidden right-0 top-12 text-sm flex flex-col cursor-pointer ">
             {currentUser ? (
               <div>
-                <Link href="/orders">
-                  <MenuItem onClick={toggleOpen}>My Orders</MenuItem>
-                </Link>
-                <Link href="/admin">
-                  <MenuItem onClick={toggleOpen}>Admin Dashboard</MenuItem>
-                </Link>
-                <hr />
+                {isAdmin && ( // Mostrar solo si el usuario es administrador
+                  <>
+                    <Link href="/orders">
+                      <MenuItem onClick={toggleOpen}>My Orders</MenuItem>
+                    </Link>
+                    <Link href="/admin">
+                      <MenuItem onClick={toggleOpen}>Admin Dashboard</MenuItem>
+                    </Link>
+                    <hr />
+                  </>
+                )}
                 <MenuItem
                   onClick={() => {
                     toggleOpen();
