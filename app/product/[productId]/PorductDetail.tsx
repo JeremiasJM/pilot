@@ -5,18 +5,17 @@ import { useCart } from "@/hooks/useCart";
 import { MdCheckCircle } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import SetQuantity from "@/app/components/products/SetQuantity";
-import ProductCard from "@/app/components/products/ProductCard";
 
 interface ProductDetailProps {
   product: any;
 }
 export type CartProductType = {
   id: number;
-  title: string;
+  name: string;
   price: number;
   description: string;
   category: string;
-  image: string;
+  images: any;
   stock: number;
   quatity: number;
 };
@@ -25,15 +24,17 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
   const { handleAddProductToCart, cartProducts } = useCart();
   const [isProductInCart, setIsProductInCart] = useState(false);
 
+  const productoId = product[0];
+  console.log(productoId.images[0].image);
   const { cartTotalQty } = useCart();
   const [cartProduct, setCartProduct] = useState<CartProductType>({
-    id: product.id,
-    title: product.title,
-    price: product.price,
-    description: product.description,
-    category: product.category,
-    image: product.image,
-    stock: product.stock,
+    id: productoId.id,
+    name: productoId.name,
+    price: productoId.price,
+    description: productoId.description,
+    category: productoId.category,
+    images: productoId.images,
+    stock: productoId.stock,
     quatity: 1,
   });
   const router = useRouter();
@@ -76,23 +77,25 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
       <div>
         <img
           className="w-full h-[400px] object-contain"
-          src={product.image}
-          alt={product.title}
+          src={productoId.images[0].image}
+          alt={productoId.name}
         />
       </div>
       <div className="flex flex-col gap-1">
-        <h2 className="text-3xl font-medium text-slate-700">{product.title}</h2>
-        <div className="text-lg text-gray-600">${product.price}</div>
+        <h2 className="text-3xl font-medium text-slate-700">
+          {productoId.name}
+        </h2>
+        <div className="text-lg text-gray-600">${productoId.price}</div>
         <Horizontal />
 
-        <div className="text-justyfy">{product.description}</div>
+        <div className="text-justyfy">{productoId.description}</div>
         <Horizontal />
         <div>
           <span className="font-semibold">CATEGORY:</span>
-          {product.category}
+          {productoId.category}
         </div>
-        <div className={product.stock ? "text-teal-400" : "text-rose-400"}>
-          {product.stock ? "In Stock" : "Out of Stock"}{" "}
+        <div className={productoId.stock ? "text-teal-400" : "text-rose-400"}>
+          {productoId.stock ? "In Stock" : "Out of Stock"}{" "}
         </div>
         <Horizontal />
         {isProductInCart ? (
