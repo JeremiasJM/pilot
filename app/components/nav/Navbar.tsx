@@ -27,7 +27,6 @@ const Navbar = async () => {
           </div>
         </Container>
       </div>
-      <Categories/>
     </div>
   );
 };
