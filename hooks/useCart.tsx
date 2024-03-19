@@ -6,7 +6,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { CartProductType } from "@/app/product/[productId]/PorductDetail";
+import { CartProductType } from "@/app/product/[id]/PorductDetail";
 import { toast } from "react-hot-toast";
 import { get } from "http";
 

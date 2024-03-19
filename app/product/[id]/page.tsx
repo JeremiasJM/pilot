@@ -9,26 +9,26 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 
 interface IParams {
-  productId?: string;
+  id?: string;
 }
 
 const Product = ({ params }: { params: IParams }) => {
-  const [product, setProduct] = useState<any>(null); // Tipo any para el producto
-  console.log(product);
+  const [product, setProduct] = useState<any>(null); 
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`/api/product?id=${params.productId}`);
-        setProduct(response.data);
+        const response = await axios.get(`/api/product?id=${params.id}`);
+        const datoFiltrado = response.data.filter((item: any) => item.id === params.id);
+        setProduct(datoFiltrado);
       } catch (error) {
         console.error("Error fetching product:", error);
       }
     };
 
-    if (params.productId) {
+    if (params.id) {
       fetchProduct(); // Llamada al método fetchProduct solo si hay un ID de producto proporcionado
     }
-  }, [params.productId]);
+  }, [params.id]);
 
   return (
     <div>
