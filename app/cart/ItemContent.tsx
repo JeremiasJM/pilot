@@ -1,5 +1,5 @@
 import { formatPrice } from "@/utils/formatPrice";
-import { CartProductType } from "../product/[productId]/PorductDetail";
+import { CartProductType } from "../product/[id]/PorductDetail";
 import Link from "next/link";
 import { truncateText } from "@/utils/truncateText";
 import Image from "next/image";

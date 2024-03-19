@@ -8,7 +8,6 @@ interface ProductCardProps {
 }
 const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   const router = useRouter();
-console.log(data);
   const img = data.images;
   return (
     <div

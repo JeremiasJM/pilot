@@ -25,7 +25,6 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
   const [isProductInCart, setIsProductInCart] = useState(false);
 
   const productoId = product[0];
-  console.log(productoId.images[0].image);
   const { cartTotalQty } = useCart();
   const [cartProduct, setCartProduct] = useState<CartProductType>({
     id: productoId.id,
@@ -38,12 +37,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
     quatity: 1,
   });
   const router = useRouter();
-  console.log(cartProducts);
   useEffect(() => {
     setIsProductInCart(false);
     if (cartProducts) {
       const existingIndex = cartProducts.findIndex(
-        (item) => item.id === product.id
+        (item) => item.id === productoId.id
       );
       if (existingIndex > -1) {
         setIsProductInCart(true);
